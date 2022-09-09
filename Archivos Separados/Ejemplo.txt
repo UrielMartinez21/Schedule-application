@@ -1,0 +1,25 @@
+#.................Filtrar Informacion.................
+data = {"Col1": (1, 2, 3, 4, 5),
+        "Col2": (0.2, 4.5, 3.5, 7.1, 0.25),
+        "Col3": ("Si", "No", "Si", "Si", "No"),
+        "Col4": ("Siempre", "Nunca", "Siempre", "Frecuentemente", "Nunca")
+        }
+--->Asignamos al DataFrame
+df = pd.DataFrame(data)
+
+--->Imprimimos tabla principal
+print(df.head())
+
+print("\n")
+
+#Tabla con condicion
+siempre = df[(df["Col4"] == "Siempre") & (df["Col2"] > 3)]
+print(siempre)
+
+#siempre2 = siempre[["Col1", "Col4"]]
+
+#print(siempre[["Col1","Col4"]])
+#print(siempre2)
+
+#.................Exportar datos.................
+siempre.to_csv("filtrado.csv",index=False)
