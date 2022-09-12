@@ -4,8 +4,8 @@ import Paquete.Predicciones as predicion
 
 from sklearn.model_selection import train_test_split                # Area de entrenamiento y testing
 
-#------------------- Pasos previos -------------------
-# fn.Excel_to_CSV("datosProfesores.xlsx", "data.csv")
+#------------------- Preparar archivos -------------------
+fn.Excel_to_CSV("datosProfesores.xlsx", "data.csv", False)
 datos=fn.Abrir_CSV("data.csv")
 # print(datos)
 
@@ -18,5 +18,5 @@ X_train, X_test, y_train, y_test = train_test_split(arreglox, arregloy)
 # print(f"[+]Datos para entrenamiento: {X_train.shape}")            # Prof. y caract. para entrenar
 
 #------------------- Area de predicciones -------------------
-
-predicion.Predecir(X_train, X_test, y_train, y_test,7)
+datos=[7,0.57,3.3]
+predicion.Predecir(X_train, X_test, y_train, y_test,7,datos)

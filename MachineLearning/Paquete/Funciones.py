@@ -25,23 +25,22 @@ def Eliminar(nombre_de_archivo):
         print("[+]No existe el archivo")
 
 # Convertimos de Excel a CSV
-def Excel_to_CSV(nombreExcel,nombreCSV):
-    Eliminar(nombreCSV)
-    excel = Ingresar_Archivo(nombreExcel)
-    tablaDatos=Importar_Excel(excel)
-    tablaDatos.to_csv(nombreCSV, index=False)
+def Excel_to_CSV(nombreExcel,nombreCSV,valor):
+    if valor:
+        Eliminar(nombreCSV)
+        excel = Ingresar_Archivo(nombreExcel)
+        tablaDatos=Importar_Excel(excel)
+        tablaDatos.to_csv(nombreCSV, index=False)
 
 # Interpreta el resultado
 def clasificar(valor):
-    if valor == 0:
-        print("[+]El profesor es: malo")
-    elif valor == 1:
+    if valor == 1:
         print("[+]El profesor es: estricto")
     elif valor == 2:
         print("[+]El profesor es: regular")
-    elif valor == 4:
+    elif valor == 3:
         print("[+]El profesor es: bueno")
-    elif valor == 5:
+    elif valor == 4:
         print("[+]El profesor es: barco")
     else:
         print("[+]Se desconoce al grupo que pertenece")
