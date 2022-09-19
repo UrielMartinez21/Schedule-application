@@ -1,14 +1,14 @@
-# Aprendizaje supervisado con algoritmo clasificador
+# Ver que tan seguro se siente el algoritmo a la hora de clasificar un nuevo punto
+
 #------------------- Librerias a usar -------------------
 import Paquete.Funciones as fn                                  # Funciones de arranque
 
 from sklearn.model_selection import train_test_split            # Area de entrenamiento y testing
-from sklearn.neighbors import KNeighborsClassifier              # Clasificador de vecinos cercanos
+from sklearn import svm                                         # Para usar estimadores de incertidumbre
 
 #------------------- Cargar archivos -------------------
 fn.Excel_to_CSV("datosProfesores.xlsx", "data.csv", False)
 datos=fn.Abrir_CSV("data.csv")
-# print(datos)
 
 #------------------- Preparar Aprendizaje -------------------
 #---- Clasificacion de valores
@@ -17,16 +17,15 @@ arregloy = datos[datos.columns[-1]].to_numpy()                  # Etiquetas de p
 
 #---- Area de entrenamiento y prueba
 X_train, X_test, y_train, y_test = train_test_split(arreglox, arregloy)
-# print(f"[+]Datos para entrenamiento: {X_train.shape}")        # Prof. y caract. para entrenar
 
-#------------------- Area de predicciones -------------------
-Knn=KNeighborsClassifier(n_neighbors=7)                         # Considerar a los 7 vecinos mas cercanos
-Knn.fit(X_train,y_train)                                        # Comando para entrenar
-porcentaje=100*Knn.score(X_test, y_test)                        # Que tan bien aprendio
+#------------------- EStimadores de Incertidumbre -------------------
+algoritmo=svm.SVC(probability=True)
+algoritmo.fit(X_train,y_train)
 
-print("[+]Aprendizaje: {:.2f}%".format(porcentaje))              
+algoritmo.decision_function_shape="ovr"
 
-#----  Prediccion
-datos=[7,0.57,3.3]
-fn.clasificar(Knn.predict([datos]))
+# prueba=algoritmo.decision_function(X_test)[:4]
+# print(prueba)
 
+porcentaje=algoritmo.predict_proba(X_test)[:4]
+print(porcentaje)
