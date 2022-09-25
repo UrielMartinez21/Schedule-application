@@ -1,0 +1,5 @@
+-----> Buscar elementos en el siguiente orden:
+    1) ID
+    2) Class name
+    3) Tag name, CSS Selector
+    4) Xpath
