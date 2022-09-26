@@ -26,6 +26,6 @@ calif[1] = ''.join(x for x in calif[1] if x not in characters)
 print(calif)
 
 #------------------| Creacion de Dataframe |------------------
-df=pd.DataFrame()
-df["Profesor","Puntuacion","Dificultad","Recomiendad"]=None
-print(df)
+# df=pd.DataFrame()
+# df["Profesor","Puntuacion","Dificultad","Recomiendad"]=None
+# print(df)
