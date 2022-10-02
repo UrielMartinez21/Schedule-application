@@ -13,7 +13,7 @@ class Profesor:
 
     def __init__(self,url=None):
         self.url=url
-        if (self.url is not None):
+        if self.url is not None:
             #---> Obtener datos de sitio web
             resultado=requests.get(self.url)                    # Obtener datos de la pagina
             soup=BeautifulSoup(resultado.text,"html.parser")    # Pasar a formato Beautiful
@@ -34,7 +34,7 @@ class Profesor:
             self.Recomiendan=calif[1]
             self.Dificultad=calif[2]
             #---> Mensaje de finalizacion
-            print("[+]Se creo el profesor...")
+            print(f"[+]Se creo el profesor: {self.nombreProf}")
         else:
             print("[+]No hay url...\n")
 
@@ -48,28 +48,43 @@ class Profesor:
             "calidad":self.Calidad,
             "recomiendan":self.Recomiendan,
             "dificultad":self.Dificultad}
-        print(f"Se agregaron datos de: {self.nombreProf}\n")
+        print("Se agregaron sus datos\n")
         return self.Diccionario
 
-#------------- Meter todo esto en una clase nueva
-#------------- Agregar todos los datos en un diccionario
+class Profesores:
+    #---> Variables a usar
+    lista=[]
+    lineas=None
+
+    def __init__(self,archivo=None):
+        self.archivo=archivo
+        if self.archivo is not None:
+            #---> Registros que seran leidos
+            with open (self.archivo,"r") as data:
+                lineas_totales=sum(1 for line in data)
+                self.lineas=lineas_totales                 
+            print("[+]Profesores creados.\n")
+        else:
+            print("No hay archivo que leer")
+
+    def Agregar_Profesores(self):
+        with open(self.archivo,"r") as data:
+            for x in range(self.lineas):
+                link=data.readline()
+                maestro=Profesor(link)
+                # maestro.Mostrar_Datos()
+                DatosProf=maestro.Crear_Diccionario()
+                self.lista.append(DatosProf)
+        print(f"\nProfesores agregados:{len(self.lista)}")
+
+    def Ver_Registro(self):
+        print(self.lista)
+
+maestro=Profesores("Links.txt")
+maestro.Agregar_Profesores()
+maestro.Ver_Registro()
+
+
+
 #------------- Pasarlo a un dataframe
 #------------- Crear un csv con todos esos datos
-
-ListaProf=[]
-
-with open('Links.txt') as myfile:
-    total_lines = sum(1 for line in myfile)
-
-
-with open("Links.txt","r") as data:
-    # print(total_lines)
-    for x in range(total_lines):
-        link=data.readline()
-        # print(link)
-        Profesor_X=Profesor(link)
-        # Profesor_X.Mostrar_Datos()
-        DatosProf=Profesor_X.Crear_Diccionario()
-        ListaProf.append(DatosProf)
-
-print(f"\nProfesores agregados: {len(ListaProf)}")
