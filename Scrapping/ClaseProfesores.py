@@ -1,6 +1,7 @@
 #------------------| Uso de librerias |------------------
 from bs4 import BeautifulSoup                   # Interactuar con documento HTML
 import requests                                 # Obtener datos de internet
+import pandas as pd                             # Crear un solo registro de datos
 
 #------------------| Creacion de Clases |------------------
 class Profesor:
@@ -44,10 +45,10 @@ class Profesor:
 
     def Crear_Diccionario(self):
         self.Diccionario={
-            "nombre":self.nombreProf,
-            "calidad":self.Calidad,
-            "recomiendan":self.Recomiendan,
-            "dificultad":self.Dificultad}
+            "Nombre":self.nombreProf,
+            "Calidad":self.Calidad,
+            "Recomiendan":self.Recomiendan,
+            "Dificultad":self.Dificultad}
         print("Se agregaron sus datos\n")
         return self.Diccionario
 
@@ -75,15 +76,28 @@ class Profesores:
                 # maestro.Mostrar_Datos()
                 DatosProf=maestro.Crear_Diccionario()
                 self.lista.append(DatosProf)
-        print(f"\nProfesores agregados:{len(self.lista)}")
+        print(f"Profesores agregados:{len(self.lista)}")
 
     def Ver_Registro(self):
         print(self.lista)
 
+    def DataFrame(self):
+        df=pd.DataFrame()
+        df["Nombre"]=None
+        df["Calidad"]=None
+        df["Recomiendan"]=None
+        df["Dificultad"]=None
+        # print(df)
+        # print(self.lista[0])
+        for registro in self.lista:
+            df = df.append(registro, ignore_index=True, sort=False)
+        print(df)
+
+
 maestro=Profesores("Links.txt")
 maestro.Agregar_Profesores()
-maestro.Ver_Registro()
-
+# maestro.Ver_Registro()
+maestro.DataFrame()
 
 
 #------------- Pasarlo a un dataframe
