@@ -43,62 +43,61 @@ class Profesor:
         print(f"Profesor: {self.nombreProf}")
         print(f"Calidad:\t{self.Calidad}\nRecomiendan:\t{self.Recomiendan}\nDificultad:\t{self.Dificultad}\n")
 
-    def Crear_Diccionario(self):
-        self.Diccionario={
-            "Nombre":self.nombreProf,
-            "Calidad":self.Calidad,
-            "Recomiendan":self.Recomiendan,
-            "Dificultad":self.Dificultad}
-        print("Se agregaron sus datos\n")
-        return self.Diccionario
+    def Valores(self):
+        # print("Se agregaron sus datos\n")
+        return (self.nombreProf,self.Calidad,self.Recomiendan,self.Dificultad)
 
 class Profesores:
     #---> Variables a usar
-    lista=[]
+    listaNombres=[]
+    listaCalidad=[]
+    listaRecomiendan=[]
+    listaDificultad=[]
+
     lineas=None
+
+    tabla=None
 
     def __init__(self,archivo=None):
         self.archivo=archivo
         if self.archivo is not None:
             #---> Registros que seran leidos
             with open (self.archivo,"r") as data:
-                lineas_totales=sum(1 for line in data)
-                self.lineas=lineas_totales                 
-            print("[+]Profesores creados.\n")
+                lineas_totales=sum(1 for line in data)  # Numeros totales de links
+                self.lineas=lineas_totales              # Asignar valor a variable
+            print("[+]Profesores creados...\n")
         else:
             print("No hay archivo que leer")
 
     def Agregar_Profesores(self):
-        with open(self.archivo,"r") as data:
+        with open(self.archivo,"r") as data:            # Se abre el archivo de links
             for x in range(self.lineas):
-                link=data.readline()
-                maestro=Profesor(link)
-                # maestro.Mostrar_Datos()
-                DatosProf=maestro.Crear_Diccionario()
-                self.lista.append(DatosProf)
-        print(f"Profesores agregados:{len(self.lista)}")
+                link=data.readline()                    # Se guarda el link 
+                maestro=Profesor(link)                  # Se pasa a link a clase Profesor
+                #---> Separacion de datos
+                nombre, calidad, recomiendan, dificultad = maestro.Valores()
+                #---> Llenado de listas
+                self.listaNombres.append(nombre)
+                self.listaCalidad.append(calidad)
+                self.listaRecomiendan.append(recomiendan)
+                self.listaDificultad.append(dificultad)
+        print(f"\nProfesores agregados:{len(self.listaNombres)}\n")
 
-    def Ver_Registro(self):
-        print(self.lista)
+    def Ver_Profesores(self):
+        print(self.listaNombres)
+        print(self.listaCalidad)
+        print(self.listaRecomiendan)
+        print(self.listaDificultad)
 
-    def DataFrame(self):
-        df=pd.DataFrame()
-        df["Nombre"]=None
-        df["Calidad"]=None
-        df["Recomiendan"]=None
-        df["Dificultad"]=None
-        # print(df)
-        # print(self.lista[0])
-        for registro in self.lista:
-            df = df.append(registro, ignore_index=True, sort=False)
-        print(df)
+    def Tabla(self):
+        df=pd.DataFrame(columns=["Nombre","Calidad","Recomiendan","Dificultad"])
+        df["Nombre"]=self.listaNombres
+        df["Calidad"]=self.listaCalidad
+        df["Recomiendan"]=self.listaRecomiendan
+        df["Dificultad"]=self.listaDificultad
+        self.tabla=df
+        print(self.tabla)
 
-
-maestro=Profesores("Links.txt")
-maestro.Agregar_Profesores()
-# maestro.Ver_Registro()
-maestro.DataFrame()
-
-
-#------------- Pasarlo a un dataframe
-#------------- Crear un csv con todos esos datos
+    def Exportar_Tabla(self):
+        self.tabla.to_csv("Datos.csv",index=False)
+        print("Se exportaron los datos")
