@@ -5,4 +5,4 @@ import Paquetes.Clases as cp
 datos=cp.Profesores("Links.txt")
 datos.Agregar_Profesores()
 datos.Tabla()
-# datos.Exportar_Tabla()
+datos.Exportar_Tabla()
