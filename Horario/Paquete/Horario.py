@@ -56,6 +56,7 @@ def Materias_Aprobadas(tabla_excel):
 
 
 def Mostar_Materias(lista):
+    print("\n")
     for numero in lista:
         print(numero)
 

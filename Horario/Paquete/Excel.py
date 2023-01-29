@@ -58,9 +58,7 @@ def all_Materias(tabla_excel):
 
 # Agrega pestañas conforme la lista que le pasen
 def all_Pestanas(Lista_materias):
-    newLista=[]
-    for pestana in Lista_materias:
-        newLista.append(pestana[0:5])
+    newLista = [pestana[0:5] for pestana in Lista_materias]
     return newLista
 
 #---------------------- Funcion para exportar ----------------------
