@@ -18,17 +18,23 @@ while True:
         print("[+]Crear archivo excel")
         menu.Menu_Excel()
         opcionExcel=int(input("Opcion: "))
+        system("cls")
         excel.Crear_Excel(opcionExcel, tablaExcel)
+        inicio.seguir()
 
     elif opcionMenu==2:
         print("[+]Generar horario de clases")
         listaAprobada=horario.Materias_Aprobadas(tablaExcel)
         horario.Mostar_Materias(listaAprobada)
+        inicio.seguir()
 
     elif opcionMenu==3:
         print("[+]Hacer consultas por dias de la semana")
         numeroDias=int(input("[+]Escoje cuantos dias quieres revisar: "))
+        system("cls")
         consultas.Consultar_Dias(tablaExcel,numeroDias)
+        inicio.seguir()
+
     elif opcionMenu==4:
         print("[+]Saliendo del codigo...")
         break

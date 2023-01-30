@@ -76,3 +76,6 @@ def Crear_Excel(opcion,tabla_de_excel):
     Exportar_Excel(lista_filtrada, pestanas)
     Verificar("Materias.xlsx")
     print(f"[+]Materias agregadas: {len(nameMaterias)}")
+    print("Nombre de las materias agregadas: ")
+    for materia in nameMaterias:
+        print("\t[+]",materia)

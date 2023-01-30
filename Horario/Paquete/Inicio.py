@@ -19,3 +19,7 @@ def Ingresar_Archivo(nombre_de_archivo):
 def Importar_Excel(archivo_excel):
     tabla = pd.read_excel(archivo_excel, sheet_name="Hoja1", header=1)
     return tabla
+
+def seguir():
+    input("\n[+]Presiona cualquier tecla para avanzar\t")
+    os.system("cls")
