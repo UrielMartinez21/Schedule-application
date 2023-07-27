@@ -28,27 +28,33 @@ def Lista_De_Pestanas(lista_de_materias):
 def Filtrar_Para_Excel(tabla_excel,lista_materias):
     listaDF=[]
     for x in range(0,len(lista_materias)):
-        materia1=tabla_excel[tabla_excel["Asignatura"]==lista_materias[x]]
-        materia2=materia1[["Grupo", "Asignatura", "Profesor"]]         
-        materia3=materia2.assign(Puntuacion="", Recomiendan="", Dificultad="", Observacion="", Orden="")
+        materia1 = tabla_excel[tabla_excel["Asignatura"]==lista_materias[x]]
+        materia2 = materia1[["Grupo", "Asignatura", "Profesor"]]         
+        materia3 = materia2.assign(Puntuacion = "", Recomiendan = "", Dificultad = "", Observacion = "", Orden = "")
         listaDF.append(materia3)
     return listaDF
 
-# Convertimos los datos filtrados a un archivio excel
 def Exportar_Excel(lista_materias,lista_pestanas):
+
+    """Exporta los datos a un archivo excel"""
+
     with ExcelWriter("Materias.xlsx") as writer:
         for var in range(0,len(lista_materias)):
             lista_materias[var].to_excel(writer, index=False, sheet_name=lista_pestanas[var])
 
-# Comprobamos que se haya creado el archivo
 def Verificar(nombre_de_archivo):
+
+    """Verifica si se creo el archivo"""
+
     if os.path.isfile(nombre_de_archivo):
         print("[+]Se creo el archivo")
     else:
         print("[+]No se creo el archivo")
 
-# Agrega todas las materias del archivo Excel
 def all_Materias(tabla_excel):
+
+    """Elimina las materias repetidas"""
+
     materias = list(tabla_excel.iloc[:, 2])
     newMaterias=[]
     for materia in materias:
@@ -58,7 +64,7 @@ def all_Materias(tabla_excel):
 
 # Agrega pestañas conforme la lista que le pasen
 def all_Pestanas(Lista_materias):
-    newLista = [pestana[0:5] for pestana in Lista_materias]
+    newLista = [pestana[0:30] for pestana in Lista_materias]
     return newLista
 
 #---------------------- Funcion para exportar ----------------------
