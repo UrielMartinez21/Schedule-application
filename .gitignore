@@ -1,0 +1,4 @@
+#ignore all cache files
+*.cache
+.pyc
+__pycache__/
